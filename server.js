@@ -15,7 +15,21 @@ var Meow = mongoose.model('Meow', {
       return res.json(meows);
     });
   });
-
+  app.post('/meows', function(req, res, next){	
+		var newMeow = new Meow({
+			text: req.body.newMeow		
+		});
+		newMeow.save(function(err){
+			return res.send("Added Successfully");
+	});
+});
+app.put('/meows/remove', function(req, res, next){
+  var meowId = req.body.meow._id;
+    Meow.remove({_id: meowId}, function(err){
+    return res.send("Deleted Successfully");
+  }
+)
+})
 app.listen(5000, function () {
   console.log('Example app listening on port 5000!')
 });
