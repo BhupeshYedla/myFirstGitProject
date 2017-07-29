@@ -4,7 +4,7 @@ var mongoose=require('mongoose');
 var app = express();
 app.use(bodyParser.json());
 mongoose.connect('mongodb://localhost:27017/mittens');
-app.use(express.static('public')); 
+app.use2(express.static('public')); 
 
 var Meow = mongoose.model('Meow', {
  text: String
@@ -19,10 +19,16 @@ var Meow = mongoose.model('Meow', {
 		var newMeow = new Meow({
 			text: req.body.newMeow		
 		});
+		var username = new Meow({
+			text: req.body.username
+		});
 		newMeow.save(function(err){
 			return res.send("Added Successfully");
-	});
-});
+		});
+		username.save(function(err){
+			return res.send("user sign up Successful!")
+		});
+ });
 app.put('/meows/remove', function(req, res, next){
   var meowId = req.body.meow._id;
     Meow.remove({_id: meowId}, function(err){
@@ -33,4 +39,3 @@ app.put('/meows/remove', function(req, res, next){
 app.listen(5000, function () {
   console.log('Example app listening on port 5000!')
 });
-
